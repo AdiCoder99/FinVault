@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import connectDB from './configs/db.js';
 import userRouter from './routes/userRoutes.js';
 import transactionRouter from './routes/transactionRoutes.js';
+import authRouter from './routes/authRoutes.js';
+import summaryRouter from './routes/summaryRoutes.js';
 
 const app = express();
 
@@ -15,20 +17,16 @@ app.use(express.json())
 app.use(cors())
 
 
-app.use((req, res, next) => {
-  req.user = {
-    id: "dummyUserId",
-    role: "admin" // change to test: viewer / analyst
-  };
-  next();
-});
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/transaction', transactionRouter)
+app.use('/api/summary', summaryRouter)
 
 
 

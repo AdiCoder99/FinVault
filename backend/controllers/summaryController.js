@@ -1,9 +1,9 @@
 import express from 'express';
-import Transaction from '../models/Transaction';
+import Transaction from '../models/Transaction.js';
 
 // API to get the total income , expense and balance overview
 export const getOverviewStats = async (req, res) => {
-    try {
+    try { 
         const stats = await Transaction.aggregate([
             {
                 $group: {
