@@ -8,9 +8,13 @@ import authRouter from './routes/authRoutes.js';
 import summaryRouter from './routes/summaryRoutes.js';
 import { apiLimiter, authLimiter } from './middlewares/rateLimiter.js';
 
+dotenv.config({ path: './.env' });
+
+
+
+
 const app = express();
 
-dotenv.config({ path: './.env' });
 
 await connectDB();
 
@@ -30,7 +34,7 @@ app.use('/api/summary', apiLimiter, summaryRouter)
 
 
 
-const port =  3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
