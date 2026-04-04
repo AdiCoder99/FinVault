@@ -24,7 +24,7 @@ app.use(cors())
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Server is running fine!')
 })
 
 app.use('/api/auth', authLimiter, authRouter)
