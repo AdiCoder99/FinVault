@@ -3,23 +3,32 @@ import mongoose from "mongoose";
 const transactionSchema = new mongoose.Schema({
     amount: {
         type: Number,
-        required: true
+        required: true,
+        min: [1, "Amount must be greater than zero"] 
     },
     type: {
         type: String,
-        enum: ["income", "expense"],
-        required: true
+        enum: {
+            values: ["income", "expense"],
+            message: "{VALUE} is not a supported transaction type" 
+        },
+        required: [true, "Please specify if this is income or expense"]
     },
     category: {
         type: String,
-        required: true
+        required: [true, "Category is required"],
+        trim: true,
+        maxlength: [50, "Category cannot be more than 50 characters"]
     },
     date: {
         type: Date,
-        required: true
+        required: [true, "Transaction date is required"],
+        default: Date.now
     },
     note: {
         type: String,
+        trim: true,
+        maxlength: [200, "Note cannot be more than 200 characters"],
         required: false
     },
     createdBy: {
