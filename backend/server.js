@@ -6,6 +6,7 @@ import userRouter from './routes/userRoutes.js';
 import transactionRouter from './routes/transactionRoutes.js';
 import authRouter from './routes/authRoutes.js';
 import summaryRouter from './routes/summaryRoutes.js';
+import { apiLimiter, authLimiter } from './middlewares/rateLimiter.js';
 
 const app = express();
 
@@ -18,15 +19,14 @@ app.use(cors())
 
 
 
-
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.use('/api/auth', authRouter)
-app.use('/api/user', userRouter)
-app.use('/api/transaction', transactionRouter)
-app.use('/api/summary', summaryRouter)
+app.use('/api/auth', authLimiter, authRouter)
+app.use('/api/user', apiLimiter, userRouter)
+app.use('/api/transaction', apiLimiter, transactionRouter)
+app.use('/api/summary', apiLimiter, summaryRouter)
 
 
 
